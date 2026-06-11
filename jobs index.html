@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Remote Job Opportunities</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Inter,sans-serif;
+}
+
+body{
+background:#0f0f0f;
+color:#fff;
+display:flex;
+justify-content:center;
+padding:30px 20px;
+}
+
+.container{
+max-width:420px;
+width:100%;
+text-align:center;
+animation:fade .6s ease;
+}
+
+@keyframes fade{
+from{opacity:0;transform:translateY(20px)}
+to{opacity:1}
+}
+
+.badge{
+display:inline-block;
+background:#22c55e;
+padding:6px 14px;
+border-radius:30px;
+font-size:11px;
+font-weight:700;
+margin-bottom:14px;
+}
+
+h1{
+font-size:28px;
+font-weight:800;
+line-height:1.2;
+margin-bottom:10px;
+}
+
+.highlight{
+color:#22c55e;
+}
+
+.subtitle{
+color:#a1a1aa;
+font-size:15px;
+margin-bottom:24px;
+}
+
+.card{
+background:#1a1a1a;
+border:1px solid #2b2b2b;
+border-radius:14px;
+padding:20px;
+margin-bottom:22px;
+}
+
+.steps{
+list-style:none;
+text-align:left;
+}
+
+.steps li{
+display:flex;
+gap:10px;
+padding:10px 0;
+border-bottom:1px solid #2b2b2b;
+font-size:14px;
+}
+
+.steps li:last-child{
+border:none;
+}
+
+.step-num{
+color:#22c55e;
+font-weight:700;
+}
+
+.cta{
+display:block;
+background:linear-gradient(180deg,#22c55e,#15803d);
+padding:18px;
+border-radius:12px;
+font-weight:700;
+text-decoration:none;
+color:white;
+font-size:16px;
+letter-spacing:.5px;
+box-shadow:0 6px 20px rgba(34,197,94,.35);
+transition:.2s;
+}
+
+.cta:hover{
+transform:scale(.97);
+}
+
+.social-proof{
+margin-top:18px;
+font-size:13px;
+color:#a1a1aa;
+}
+
+.counter{
+font-weight:700;
+color:#22c55e;
+}
+
+.trust{
+display:flex;
+justify-content:center;
+gap:18px;
+margin-top:20px;
+font-size:12px;
+color:#71717a;
+}
+
+.faq{
+margin-top:30px;
+text-align:left;
+}
+
+.faq h2{
+text-align:center;
+margin-bottom:15px;
+font-size:18px;
+}
+
+.faq-item{
+background:#1a1a1a;
+border:1px solid #2b2b2b;
+border-radius:10px;
+margin-bottom:10px;
+}
+
+.faq-q{
+padding:14px;
+cursor:pointer;
+font-weight:600;
+font-size:14px;
+}
+
+.faq-a{
+display:none;
+padding:0 14px 14px;
+font-size:13px;
+color:#a1a1aa;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="badge">REMOTE JOBS AVAILABLE</div>
+
+<h1>Start earning <span class="highlight">$25-40/hr</span> working online</h1>
+
+<p class="subtitle">
+Companies are hiring remote workers right now. Apply in less than 2 minutes.
+</p>
+
+<div class="card">
+
+<ul class="steps">
+
+<li><span class="step-num">1.</span> Enter your email and basic details</li>
+
+<li><span class="step-num">2.</span> Complete a quick questionnaire</li>
+
+<li><span class="step-num">3.</span> Browse available remote jobs</li>
+
+<li><span class="step-num">4.</span> Apply for the position you want</li>
+
+<li><span class="step-num">5.</span> Start working from home</li>
+
+</ul>
+
+</div>
+
+<a class="cta" href="https://gloffers.org/aff_c?offer_id=973&aff_id=155597">
+APPLY NOW
+</a>
+
+<div class="social-proof">
+<span class="counter">2,187</span> people applied today
+</div>
+
+<div class="trust">
+<span>✔ No experience needed</span>
+<span>✔ Remote friendly</span>
+<span>✔ Flexible hours</span>
+</div>
+
+<div class="faq">
+
+<h2>Frequently Asked Questions</h2>
+
+<div class="faq-item">
+<div class="faq-q">Do I need experience?</div>
+<div class="faq-a">
+Many companies offer entry-level positions and training.
+</div>
+</div>
+
+<div class="faq-item">
+<div class="faq-q">How much can I earn?</div>
+<div class="faq-a">
+Most positions pay between $12 and $40 per hour depending on the job.
+</div>
+</div>
+
+<div class="faq-item">
+<div class="faq-q">Is this free?</div>
+<div class="faq-a">
+Yes. You will never be asked for payment or credit card information.
+</div>
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+document.querySelectorAll(".faq-q").forEach(btn=>{
+btn.onclick=()=>{
+const ans=btn.nextElementSibling
+ans.style.display=ans.style.display==="block"?"none":"block"
+}
+})
+
+</script>
+
+</body>
+</html>
