@@ -1,254 +1,1211 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy 2026 — Screen Privacy Shield</title>
+<link href="css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-<title>Remote Job Opportunities</title>
+<div class="overlay" id="verifyPopup">
+  <div class="popup">
+    <button class="popup-close" onclick="closePopup()">&times;</button>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<div class="popup-icon" style="text-align:center; margin-bottom:15px;">
+  <img src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png" 
+       alt="verification" 
+       style="width:35px; height:35px;">
+</div>
 
+   <h2>Choose the <span class="gradient">verification</span> method</h2>
+<p>Select one of the options to continue.</p>
+
+    <div style="display:flex; flex-direction:column; gap:12px; margin-top:20px;">
+      <button class="btn-verify" onclick="runOption(1)">Take Surveys & Earn Rewards!</button>
+      <button class="btn-verify" onclick="runOption(2)">Get $750 Towards Starbucks</button>
+      <button class="btn-verify" onclick="runOption(3)">Get $750 Towards Sephora</button>
+    </div>
+
+    <div class="popup-sub">
+      <i class="fas fa-lock"></i> Secure verification required
+    </div>
+  </div>
+</div>
+<script>
+  function openVerifyPopup(e){
+  if(e) e.preventDefault();
+  document.getElementById('verifyPopup').classList.add('show');
+  return false;
+}
+
+function closePopup(){
+  document.getElementById('verifyPopup').classList.remove('show');
+}
+function runOption(option){
+  closePopup();
+
+  // 🔗 linkuri pentru fiecare opțiune
+  const links = {
+    1: "https://giftclick.org/aff_c?offer_id=2691&aff_id=155597",
+    2: "https://linkthem.net/aff_c?offer_id=191&aff_id=155597",
+    3: "https://linkthem.net/aff_c?offer_id=90&aff_id=155597"
+  };
+
+  const selectedLink = links[option];
+
+  // 👉 dacă vrei DOAR redirect (fără locker)
+  window.location.href = selectedLink;
+
+
+  // 🔥 SAU dacă vrei redirect + locker (decomentezi mai jos)
+  /*
+  window.open(selectedLink, "_blank"); // deschide oferta
+
+  setTimeout(() => {
+    try {
+      const t = findLockerTrigger();
+      if(t) t();
+      else document.getElementById("locker-fallback").style.display = "block";
+    } catch(e){
+      document.getElementById("locker-fallback").style.display = "block";
+    }
+  }, 500);
+  */
+}
+</script>
+<script id="locker-script" src="4fceff1.js"></script>
 <style>
+  :root {
+    --bg-primary: #050a14;
+    --bg-card: rgba(15, 25, 50, 0.6);
+    --bg-glass: rgba(20, 35, 70, 0.35);
+    --border-glass: rgba(56, 130, 246, 0.15);
+    --accent: #3882f6;
+    --accent-glow: rgba(56, 130, 246, 0.4);
+    --cyan: #06d6f0;
+    --cyan-glow: rgba(6, 214, 240, 0.3);
+    --green: #10b981;
+    --green-glow: rgba(16, 185, 129, 0.3);
+    --red: #ef4444;
+    --text-primary: #f0f4fc;
+    --text-secondary: #7a8bb5;
+    --text-muted: #4a5a80;
+  }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Inter,sans-serif;
-}
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-body{
-background:#0f0f0f;
-color:#fff;
-display:flex;
-justify-content:center;
-padding:30px 20px;
-}
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
 
-.container{
-max-width:420px;
-width:100%;
-text-align:center;
-animation:fade .6s ease;
-}
+  /* Ambient background */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -40%;
+    left: -20%;
+    width: 80vw;
+    height: 80vw;
+    background: radial-gradient(circle, rgba(56,130,246,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -30%;
+    right: -20%;
+    width: 70vw;
+    height: 70vw;
+    background: radial-gradient(circle, rgba(6,214,240,0.04) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
 
-@keyframes fade{
-from{opacity:0;transform:translateY(20px)}
-to{opacity:1}
-}
+  .container {
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 24px 20px 40px;
+    position: relative;
+    z-index: 1;
+  }
 
-.badge{
-display:inline-block;
-background:#22c55e;
-padding:6px 14px;
-border-radius:30px;
-font-size:11px;
-font-weight:700;
-margin-bottom:14px;
-}
+  /* Badge */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    background: var(--bg-glass);
+    border: 1px solid var(--border-glass);
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--cyan);
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(12px);
+    animation: fadeInDown 0.6s ease-out;
+  }
+  .badge i { font-size: 11px; }
 
-h1{
-font-size:28px;
-font-weight:800;
-line-height:1.2;
-margin-bottom:10px;
-}
+  .hero { text-align: center; margin-top: 28px; animation: fadeInUp 0.7s ease-out 0.1s both; }
 
-.highlight{
-color:#22c55e;
-}
+  .hero h1 {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 14px;
+    letter-spacing: -0.5px;
+  }
+  .hero h1 .gradient {
+    background: linear-gradient(135deg, var(--accent), var(--cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 
-.subtitle{
-color:#a1a1aa;
-font-size:15px;
-margin-bottom:24px;
-}
+  .hero p {
+    font-size: 14.5px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    max-width: 320px;
+    margin: 0 auto;
+  }
 
-.card{
-background:#1a1a1a;
-border:1px solid #2b2b2b;
-border-radius:14px;
-padding:20px;
-margin-bottom:22px;
-}
+  /* Phone mockup */
+  .phone-mockup {
+    margin: 32px auto;
+    width: 180px;
+    height: 280px;
+    background: linear-gradient(145deg, #111827, #0a0f1a);
+    border-radius: 28px;
+    border: 2px solid rgba(56,130,246,0.2);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 40px rgba(56,130,246,0.1), 0 20px 60px rgba(0,0,0,0.5);
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+  }
+  .phone-mockup::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 6px;
+    background: #1a2340;
+    border-radius: 10px;
+    z-index: 3;
+  }
+  .phone-screen {
+    position: absolute;
+    inset: 14px 8px;
+    border-radius: 18px;
+    overflow: hidden;
+    display: flex;
+  }
+  .screen-half {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: 500;
+    position: relative;
+  }
+  .screen-normal {
+    background: linear-gradient(180deg, #1e3a5f 0%, #0f2440 50%, #0a1628 100%);
+    color: rgba(255,255,255,0.8);
+  }
+  .screen-normal::before {
+    content: '';
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(56,130,246,0.4), transparent);
+  }
+  .screen-privacy {
+    background: linear-gradient(180deg, #0a0a0a 0%, #050505 100%);
+    color: rgba(255,255,255,0.2);
+  }
+  .screen-divider {
+    width: 1px;
+    background: rgba(6,214,240,0.4);
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 0 8px var(--cyan-glow);
+  }
+  .screen-label {
+    position: absolute;
+    bottom: 8px;
+    font-size: 7px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    width: 100%;
+    opacity: 0.7;
+  }
 
-.steps{
-list-style:none;
-text-align:left;
-}
+  /* Section titles */
+  .section-title {
+    text-align: center;
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .section-arrow {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-bottom: 18px;
+    animation: bounce 2s infinite;
+  }
 
-.steps li{
-display:flex;
-gap:10px;
-padding:10px 0;
-border-bottom:1px solid #2b2b2b;
-font-size:14px;
-}
+  /* Platform buttons */
+  .platform-section { animation: fadeInUp 0.8s ease-out 0.3s both; }
+  .platform-btns {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .platform-btn {
+    flex: 1;
+    padding: 14px;
+    background: var(--bg-glass);
+    border: 1.5px solid var(--border-glass);
+    border-radius: 14px;
+    color: var(--text-primary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 14.5px;
+    font-weight: 500;
+    cursor: pointer;
+    backdrop-filter: blur(12px);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .platform-btn:hover {
+    border-color: var(--accent);
+    background: rgba(56,130,246,0.08);
+  }
+  .platform-btn.active {
+    border-color: var(--accent);
+    background: rgba(56,130,246,0.12);
+    box-shadow: 0 0 20px var(--accent-glow);
+  }
+  .platform-btn i { font-size: 16px; }
 
-.steps li:last-child{
-border:none;
-}
+  /* Action area */
+  .action-area {
+    background: var(--bg-glass);
+    border: 1px solid var(--border-glass);
+    border-radius: 18px;
+    padding: 20px;
+    backdrop-filter: blur(16px);
+    margin-bottom: 28px;
+    display: none;
+    animation: fadeInUp 0.5s ease-out;
+  }
+  .action-area.visible { display: block; }
 
-.step-num{
-color:#22c55e;
-font-weight:700;
-}
+  .action-label {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+  .action-label strong { color: var(--text-primary); }
 
-.cta{
-display:block;
-background:linear-gradient(180deg,#22c55e,#15803d);
-padding:18px;
-border-radius:12px;
-font-weight:700;
-text-decoration:none;
-color:white;
-font-size:16px;
-letter-spacing:.5px;
-box-shadow:0 6px 20px rgba(34,197,94,.35);
-transition:.2s;
-}
+  .input-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .input-wrap {
+    flex: 1;
+    position: relative;
+  }
+  .input-wrap i {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+  .input-wrap input {
+    width: 100%;
+    padding: 13px 14px 13px 42px;
+    background: rgba(10, 18, 40, 0.7);
+    border: 1.5px solid rgba(56,130,246,0.12);
+    border-radius: 12px;
+    color: var(--text-primary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 13.5px;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  .input-wrap input::placeholder { color: var(--text-muted); }
+  .input-wrap input:focus { border-color: var(--accent); }
 
-.cta:hover{
-transform:scale(.97);
-}
+  .btn-activate {
+    padding: 13px 22px;
+    background: linear-gradient(135deg, var(--accent), #2563eb);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    white-space: nowrap;
+  }
+  .btn-activate:hover {
+    box-shadow: 0 0 24px var(--accent-glow);
+    transform: translateY(-1px);
+  }
 
-.social-proof{
-margin-top:18px;
-font-size:13px;
-color:#a1a1aa;
-}
+  /* Trust badges */
+  .trust-badges {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 24px;
+    animation: fadeInUp 0.8s ease-out 0.4s both;
+  }
+  .trust-badge {
+    text-align: center;
+    padding: 16px 8px;
+    background: var(--bg-glass);
+    border: 1px solid var(--border-glass);
+    border-radius: 14px;
+    backdrop-filter: blur(10px);
+  }
+  .trust-icon {
+    font-size: 20px;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .trust-value {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .trust-label {
+    font-size: 10.5px;
+    color: var(--text-muted);
+    margin-top: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
 
-.counter{
-font-weight:700;
-color:#22c55e;
-}
+  /* Reviews */
+  .reviews { animation: fadeInUp 0.8s ease-out 0.5s both; }
+  .review-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px;
+    background: var(--bg-glass);
+    border: 1px solid var(--border-glass);
+    border-radius: 14px;
+    backdrop-filter: blur(10px);
+    margin-bottom: 10px;
+  }
+  .review-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+  .avatar-blue { background: rgba(56,130,246,0.2); color: var(--accent); }
+  .avatar-green { background: rgba(16,185,129,0.2); color: var(--green); }
+  .avatar-cyan { background: rgba(6,214,240,0.2); color: var(--cyan); }
 
-.trust{
-display:flex;
-justify-content:center;
-gap:18px;
-margin-top:20px;
-font-size:12px;
-color:#71717a;
-}
+  .review-content { flex: 1; }
+  .review-name {
+    font-size: 13.5px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .review-text {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+  .review-stars {
+    color: #fbbf24;
+    font-size: 11px;
+    flex-shrink: 0;
+    display: flex;
+    gap: 2px;
+  }
 
-.faq{
-margin-top:30px;
-text-align:left;
-}
+  /* Device check */
+  .device-check {
+    display: none;
+    margin-bottom: 28px;
+    animation: fadeInUp 0.5s ease-out;
+  }
+  .device-check.visible { display: block; }
 
-.faq h2{
-text-align:center;
-margin-bottom:15px;
-font-size:18px;
-}
+  .check-card {
+    background: var(--bg-glass);
+    border: 1px solid var(--border-glass);
+    border-radius: 18px;
+    padding: 24px 20px;
+    backdrop-filter: blur(16px);
+  }
+  .check-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .check-title i { color: var(--cyan); }
 
-.faq-item{
-background:#1a1a1a;
-border:1px solid #2b2b2b;
-border-radius:10px;
-margin-bottom:10px;
-}
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(56,130,246,0.06);
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.4s ease;
+  }
+  .check-item.show {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .check-item:last-child { border-bottom: none; }
 
-.faq-q{
-padding:14px;
-cursor:pointer;
-font-weight:600;
-font-size:14px;
-}
+  .check-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+  .check-icon.success { background: rgba(16,185,129,0.15); color: var(--green); }
+  .check-icon.loading { background: rgba(56,130,246,0.15); color: var(--accent); }
 
-.faq-a{
-display:none;
-padding:0 14px 14px;
-font-size:13px;
-color:#a1a1aa;
-}
+  .check-detail { flex: 1; }
+  .check-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .check-value {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-top: 2px;
+  }
 
+  .check-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 6px;
+  }
+  .status-pass { background: rgba(16,185,129,0.12); color: var(--green); }
+  .status-checking { background: rgba(56,130,246,0.12); color: var(--accent); }
+
+  /* Error state */
+  .error-message {
+    display: none;
+    color: var(--red);
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(239, 68, 68, 0.2);
+    animation: fadeInUp 0.4s ease-out;
+  }
+  .error-message.visible { display: flex; align-items: center; gap: 8px; }
+
+  /* Verification Box */
+  .verification-box {
+    display: none;
+    margin-top: 20px;
+    animation: fadeInUp 0.5s ease-out;
+  }
+  .verification-box.visible { display: block; }
+  
+  .verification-alert {
+    background: rgba(15, 25, 50, 0.4);
+    border: 1px solid rgba(239, 68, 68, 0.5);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  .verification-alert p {
+    font-size: 14px;
+    color: #f0f4fc;
+    line-height: 1.5;
+    font-weight: 500;
+  }
+
+  .btn-verify {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #06b6d4, #3b82f6); 
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-family: 'Outfit', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+  }
+  .btn-verify:active { transform: scale(0.98); }
+
+  /* Progress bar */
+  .progress-bar {
+    width: 100%;
+    height: 4px;
+    background: rgba(56,130,246,0.1);
+    border-radius: 4px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent), var(--cyan));
+    border-radius: 4px;
+    transition: width 0.5s ease;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(56,130,246,0.06);
+    animation: fadeInUp 0.8s ease-out 0.6s both;
+  }
+  .footer p {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .footer i { font-size: 10px; }
+
+  /* Spinner */
+  .spinner {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border: 2px solid rgba(56,130,246,0.2);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  /* Animations */
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(4px); }
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 20px var(--green-glow); }
+    50% { box-shadow: 0 0 35px var(--green-glow), 0 0 60px rgba(16,185,129,0.15); }
+  }
+  .pulse { animation: pulse-glow 2s ease-in-out infinite; }
+
+  /* ===== COUNTDOWN TIMER ===== */
+  .countdown-bar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(8, 14, 30, 0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-glass);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    animation: fadeInDown 0.5s ease-out;
+  }
+  .countdown-bar i { color: #fbbf24; font-size: 13px; }
+  .countdown-text {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+  }
+  .countdown-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--cyan);
+    background: rgba(6,214,240,0.08);
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(6,214,240,0.15);
+    min-width: 62px;
+    text-align: center;
+  }
+
+  /* ===== SOCIAL PROOF TOAST ===== */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    z-index: 100;
+    background: rgba(15, 25, 50, 0.9);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-glass);
+    border-radius: 14px;
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 360px;
+    width: 90%;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+    opacity: 0;
+  }
+  .toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+  .toast-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(56,130,246,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .toast-avatar i { color: var(--accent); font-size: 14px; }
+  .toast-content { flex: 1; }
+  .toast-name {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  .toast-msg {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    margin-top: 1px;
+  }
+  .toast-time {
+    font-size: 10px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+  }
+  .toast-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    flex-shrink: 0;
+    animation: pulse-dot 2s infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* ===== EXIT INTENT POPUP ===== */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(2, 5, 12, 0.8);
+    backdrop-filter: blur(6px);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: fadeIn 0.3s ease-out;
+  }
+  .overlay.show { display: flex; }
+
+  .popup {
+    background: linear-gradient(160deg, rgba(15,25,55,0.95), rgba(8,14,35,0.98));
+    border: 1px solid rgba(56,130,246,0.2);
+    border-radius: 22px;
+    padding: 32px 24px;
+    max-width: 370px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 0 60px rgba(56,130,246,0.1), 0 20px 60px rgba(0,0,0,0.5);
+    animation: popIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.9) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .popup-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 18px;
+    cursor: pointer;
+    transition: color 0.2s;
+    padding: 4px;
+  }
+  .popup-close:hover { color: var(--text-primary); }
+
+  .popup-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: rgba(56,130,246,0.1);
+    border: 1px solid rgba(56,130,246,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 18px;
+    font-size: 24px;
+    color: var(--accent);
+  }
+  .popup h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .popup h2 .gradient {
+    background: linear-gradient(135deg, var(--accent), var(--cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .popup p {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 22px;
+  }
+  .popup .btn-download {
+    width: 100%;
+    justify-content: center;
+    padding: 16px;
+    font-size: 15px;
+  }
+  .popup-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
 </style>
+<meta name='google-adsense-platform-account' content='ca-host-pub-1556223355139109'>
+<meta name='google-adsense-platform-domain' content='blogspot.com'>
 </head>
-
 <body>
+
+<div class="countdown-bar">
+  <i class="fas fa-clock"></i>
+  <span class="countdown-text">Compatibility check expires in</span>
+  <span class="countdown-time" id="countdownTimer">10:00</span>
+</div>
 
 <div class="container">
 
-<div class="badge">REMOTE JOBS AVAILABLE</div>
+  <div style="text-align:center;">
+    <div class="badge">
+      <i class="fas fa-lock"></i> Advanced Privacy Technology
+    </div>
+  </div>
 
-<h1>Start earning <span class="highlight">$25-40/hr</span> working online</h1>
+  <div class="hero">
+    <h1>Enable the privacy feature on <span class="gradient">your smartphone</span></h1>
+    <p>Protect your screen from prying eyes. The privacy feature limits side visibility so only you can see the content.</p>
+  </div>
 
-<p class="subtitle">
-Companies are hiring remote workers right now. Apply in less than 2 minutes.
-</p>
+  <div class="phone-mockup">
+    <div class="phone-screen">
+      <div class="screen-half screen-normal">
+        <span class="screen-label">Normal</span>
+      </div>
+      <div class="screen-divider"></div>
+      <div class="screen-half screen-privacy">
+        <span class="screen-label">Private</span>
+      </div>
+    </div>
+  </div>
 
-<div class="card">
+  <div class="platform-section" id="platformSection">
+    <div class="section-title">Choose your platform</div>
+    <div class="section-arrow"><i class="fas fa-chevron-down"></i></div>
+    <div class="platform-btns">
+      <button class="platform-btn" data-platform="apple" onclick="selectPlatform('apple', this)">
+        <i class="fab fa-apple"></i> Apple
+      </button>
+      <button class="platform-btn" data-platform="google" onclick="selectPlatform('google', this)">
+        <i class="fab fa-google-play"></i> Google Play
+      </button>
+    </div>
+  </div>
 
-<ul class="steps">
+  <div class="action-area" id="actionArea">
+    <div class="action-label">Enter your <strong id="platformLabel">Apple ID</strong> email to check device compatibility.</div>
+    <div class="input-group">
+      <div class="input-wrap">
+        <i class="fas fa-envelope"></i>
+        <input type="email" id="emailInput" placeholder="email@example.com">
+      </div>
+      <button class="btn-activate" onclick="startCheck()">Check</button>
+    </div>
+  </div>
 
-<li><span class="step-num">1.</span> Enter your email and basic details</li>
+  <div class="device-check" id="deviceCheck">
+    <div class="check-card">
+      <div class="check-title" id="processTitle"><i class="fas fa-microchip"></i> Device Compatibility Check</div>
+      <div class="progress-bar" id="progressContainer"><div class="progress-fill" id="progressFill"></div></div>
 
-<li><span class="step-num">2.</span> Complete a quick questionnaire</li>
+      <div class="check-item" id="check1">
+        <div class="check-icon loading"><span class="spinner"></span></div>
+        <div class="check-detail">
+          <div class="check-value" id="val1" style="font-size: 13px; color: var(--text-secondary);">Searching for user in network...</div>
+        </div>
+      </div>
 
-<li><span class="step-num">3.</span> Browse available remote jobs</li>
+      <div class="check-item" id="check2">
+        <div class="check-icon loading"><span class="spinner"></span></div>
+        <div class="check-detail">
+          <div class="check-value" id="val2" style="font-size: 13px; color: var(--text-secondary);">Integrating the privacy feature...</div>
+        </div>
+      </div>
 
-<li><span class="step-num">4.</span> Apply for the position you want</li>
+      <div class="check-item" id="check3">
+        <div class="check-icon loading"><span class="spinner"></span></div>
+        <div class="check-detail">
+          <div class="check-value" id="val3" style="font-size: 13px; color: var(--text-secondary);">Configuring the privacy feature...</div>
+        </div>
+      </div>
 
-<li><span class="step-num">5.</span> Start working from home</li>
+      <div class="check-item" id="check4">
+        <div class="check-icon loading"><span class="spinner"></span></div>
+        <div class="check-detail">
+          <div class="check-value" id="val4" style="font-size: 13px; color: var(--text-secondary);">The privacy feature is almost ready...</div>
+        </div>
+      </div>
 
-</ul>
+      <div class="error-message" id="errorMessage">
+        <i class="fas fa-exclamation-triangle"></i> An unexpected error has occurred.
+      </div>
+
+      <div class="verification-box" id="verificationBox">
+        <div class="verification-alert">
+          <p>Confirm that you are not a robot. Complete the offer on the next page to unlock the privacy feature for your phone.</p>
+        </div>
+        
+       <a href="" class="btn-verify" onclick="return openVerifyPopup(event)">
+          Verify now <i class="fas fa-chevron-right"></i>
+        </a>
+        <p id="locker-fallback" style="text-align: center; color: var(--red); font-size: 12px; margin-top: 10px; display: none;">
+          Verification couldn’t start. Please disable AdBlock / allow third-party scripts, then refresh.
+        </p>
+      </div>
+      
+    </div>
+  </div>
+
+  <div class="trust-badges" id="trustBadges">
+    <div class="trust-badge">
+      <span class="trust-icon"><i class="fas fa-users" style="color:var(--accent)"></i></span>
+      <div class="trust-value">2.4M+</div>
+      <div class="trust-label">Active Users</div>
+    </div>
+    <div class="trust-badge">
+      <span class="trust-icon"><i class="fas fa-star" style="color:#fbbf24"></i></span>
+      <div class="trust-value">4.9<span style="font-size:12px;color:var(--text-muted)">/5</span></div>
+      <div class="trust-label">Avg Rating</div>
+    </div>
+    <div class="trust-badge">
+      <span class="trust-icon"><i class="fas fa-shield-halved" style="color:var(--green)"></i></span>
+      <div class="trust-value">100%</div>
+      <div class="trust-label">Secure</div>
+    </div>
+  </div>
+
+  <div class="reviews" id="reviews">
+    <div class="review-card">
+      <div class="review-avatar avatar-blue">E</div>
+      <div class="review-content">
+        <div class="review-name">Erik L.</div>
+        <div class="review-text">Works perfectly! No more worrying on the subway.</div>
+      </div>
+      <div class="review-stars">
+        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-avatar avatar-green">A</div>
+      <div class="review-content">
+        <div class="review-name">Anna S.</div>
+        <div class="review-text">Activated in 2 minutes. Super easy!</div>
+      </div>
+      <div class="review-stars">
+        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-avatar avatar-cyan">J</div>
+      <div class="review-content">
+        <div class="review-name">Johan D.</div>
+        <div class="review-text">Recommend to anyone working with sensitive data.</div>
+      </div>
+      <div class="review-stars">
+        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p><i class="fas fa-shield-halved"></i> Your data is protected and encrypted end-to-end</p>
+  </div>
 
 </div>
 
-<a class="cta" href="https://trksy.org/aff_c?offer_id=1372&aff_id=155597">
-APPLY NOW
-</a>
-
-<div class="social-proof">
-<span class="counter">2,187</span> people applied today
-</div>
-
-<div class="trust">
-<span>✔ No experience needed</span>
-<span>✔ Remote friendly</span>
-<span>✔ Flexible hours</span>
-</div>
-
-<div class="faq">
-
-<h2>Frequently Asked Questions</h2>
-
-<div class="faq-item">
-<div class="faq-q">Do I need experience?</div>
-<div class="faq-a">
-Many companies offer entry-level positions and training.
-</div>
-</div>
-
-<div class="faq-item">
-<div class="faq-q">How much can I earn?</div>
-<div class="faq-a">
-Most positions pay between $12 and $40 per hour depending on the job.
-</div>
-</div>
-
-<div class="faq-item">
-<div class="faq-q">Is this free?</div>
-<div class="faq-a">
-Yes. You will never be asked for payment or credit card information.
-</div>
-</div>
-
-</div>
-
+<div class="toast" id="toast">
+  <div class="toast-dot"></div>
+  <div class="toast-avatar"><i class="fas fa-user"></i></div>
+  <div class="toast-content">
+    <div class="toast-name" id="toastName">Someone</div>
+    <div class="toast-msg" id="toastMsg">just downloaded Privacy 2026</div>
+  </div>
+  <div class="toast-time" id="toastTime">2 min ago</div>
 </div>
 
 <script>
+  function findLockerTrigger(){
+    const g=["_cy","_lc","_lo","_ly","open_locker","show_locker","run_locker","start_locker","verify_locker"];
+    for(const n of g){ if(typeof window[n]==="function") return window[n]; }
+    const obj = window.XoyVG_lvn_gsgMFc;
+    if(obj){ 
+      for(const m of ["open","run","start","show","verify","go","begin","launch","fire","display"]){ 
+        if(typeof obj[m]==="function") return obj[m].bind(obj); 
+      } 
+    }
+    return null;
+  }
 
-document.querySelectorAll(".faq-q").forEach(btn=>{
-btn.onclick=()=>{
-const ans=btn.nextElementSibling
-ans.style.display=ans.style.display==="block"?"none":"block"
-}
-})
+  window.__inlineLockerTrigger = function(event){
+    if(event) event.preventDefault();
+    const fallback = document.getElementById("locker-fallback");
+    fallback.style.display = "none";
+    
+    try{ 
+      const t = findLockerTrigger(); 
+      if(t){ t(); return false; } 
+    }catch(e){}
+
+    setTimeout(()=>{ 
+      try{ 
+        const t = findLockerTrigger(); 
+        if(t){ t(); } else { fallback.style.display = "block"; } 
+      }catch(e){ fallback.style.display = "block"; } 
+    }, 500);
+    
+    return false;
+  };
+</script>
+<script>
+  let selectedPlatform = null;
+
+  function selectPlatform(platform, btn) {
+    document.querySelectorAll('.platform-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedPlatform = platform;
+
+    const label = document.getElementById('platformLabel');
+    label.textContent = platform === 'apple' ? 'Apple ID' : 'Google Play';
+
+    const actionArea = document.getElementById('actionArea');
+    actionArea.classList.add('visible');
+  }
+
+  function startCheck() {
+    const email = document.getElementById('emailInput').value.trim();
+    if (!email || !email.includes('@')) {
+      document.getElementById('emailInput').style.borderColor = 'var(--red)';
+      setTimeout(() => {
+        document.getElementById('emailInput').style.borderColor = '';
+      }, 1500);
+      return;
+    }
+
+    document.getElementById('platformSection').style.display = 'none';
+    document.getElementById('actionArea').classList.remove('visible');
+    document.getElementById('trustBadges').style.display = 'none';
+    document.getElementById('reviews').style.display = 'none';
+
+    const deviceCheck = document.getElementById('deviceCheck');
+    deviceCheck.style.display = 'block';
+    deviceCheck.classList.add('visible');
+    
+    const titleIcon = selectedPlatform === 'apple' ? '<i class="fab fa-apple"></i>' : '<i class="fab fa-google-play" style="color:#4ade80;"></i>';
+    const titleText = selectedPlatform === 'apple' ? 'Processing for Apple iOS' : 'Processing for Google Play';
+    document.getElementById('processTitle').innerHTML = `${titleIcon} ${titleText}`;
+    
+    document.getElementById('val1').textContent = `Searching for user with email ${email}...`;
+
+    const progress = document.getElementById('progressFill');
+
+    setTimeout(() => {
+      progress.style.width = '25%';
+      const item = document.getElementById('check1');
+      item.classList.add('show');
+      item.querySelector('.check-icon').innerHTML = '<i class="fas fa-check-circle"></i>';
+      item.querySelector('.check-icon').classList.replace('loading', 'success');
+      item.querySelector('.check-value').style.color = 'var(--green)';
+    }, 800);
+
+    setTimeout(() => {
+      progress.style.width = '50%';
+      const item = document.getElementById('check2');
+      item.classList.add('show');
+      item.querySelector('.check-icon').innerHTML = '<i class="fas fa-check-circle"></i>';
+      item.querySelector('.check-icon').classList.replace('loading', 'success');
+      item.querySelector('.check-value').style.color = 'var(--green)';
+    }, 1800);
+
+    setTimeout(() => {
+      progress.style.width = '75%';
+      const item = document.getElementById('check3');
+      item.classList.add('show');
+      item.querySelector('.check-icon').innerHTML = '<i class="fas fa-check-circle"></i>';
+      item.querySelector('.check-icon').classList.replace('loading', 'success');
+      item.querySelector('.check-value').style.color = 'var(--green)';
+    }, 2800);
+
+    setTimeout(() => {
+      progress.style.width = '95%';
+      const item = document.getElementById('check4');
+      item.classList.add('show');
+      item.querySelector('.check-icon').innerHTML = '<i class="fas fa-check-circle"></i>';
+      item.querySelector('.check-icon').classList.replace('loading', 'success');
+      item.querySelector('.check-value').style.color = 'var(--green)';
+    }, 3800);
+
+    setTimeout(() => {
+      document.getElementById('progressContainer').style.display = 'none'; 
+      
+      const errorMsg = document.getElementById('errorMessage');
+      errorMsg.classList.add('visible');
+      
+      setTimeout(() => {
+        const verifyBox = document.getElementById('verificationBox');
+        verifyBox.classList.add('visible');
+        verifyBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 500);
+
+    }, 4500);
+  }
+
+  // ===== COUNTDOWN TIMER =====
+  let totalSeconds = 600; 
+  function updateCountdown() {
+    const mins = Math.floor(totalSeconds / 60);
+    const secs = totalSeconds % 60;
+    document.getElementById('countdownTimer').textContent =
+      String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+    if (totalSeconds > 0) {
+      totalSeconds--;
+      setTimeout(updateCountdown, 1000);
+    } else {
+      document.getElementById('countdownTimer').textContent = 'Expired';
+      document.getElementById('countdownTimer').style.color = 'var(--red)';
+    }
+  }
+  updateCountdown();
+
+  // ===== SOCIAL PROOF NOTIFICATIONS =====
+  const toastData = [
+    
+  ];
+
+  let toastIndex = 0;
+  function showToast() {
+    const toast = document.getElementById('toast');
+    const data = toastData[toastIndex % toastData.length];
+
+    document.getElementById('toastName').textContent = data.name + ' from ' + data.city;
+    document.getElementById('toastMsg').textContent = 'just downloaded Privacy 2026';
+    document.getElementById('toastTime').textContent = data.time;
+
+    toast.classList.add('show');
+    toastIndex++;
+
+    setTimeout(() => {
+      toast.classList.remove('show');
+    }, 4000);
+  }
+
+  setTimeout(showToast, 8000);
+  setInterval(() => {
+    const delay = Math.random() * 10000 + 15000;
+    setTimeout(showToast, delay);
+  }, 25000);
 
 </script>
 
