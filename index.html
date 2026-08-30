@@ -1,11 +1,8 @@
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Privacy 2026 — Screen Privacy Shield</title>
 <link href="css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -56,22 +53,6 @@ function runOption(option){
 
   // 👉 dacă vrei DOAR redirect (fără locker)
   window.location.href = selectedLink;
-
-
-  // 🔥 SAU dacă vrei redirect + locker (decomentezi mai jos)
-  /*
-  window.open(selectedLink, "_blank"); // deschide oferta
-
-  setTimeout(() => {
-    try {
-      const t = findLockerTrigger();
-      if(t) t();
-      else document.getElementById("locker-fallback").style.display = "block";
-    } catch(e){
-      document.getElementById("locker-fallback").style.display = "block";
-    }
-  }, 500);
-  */
 }
 </script>
 <script id="locker-script" src="4fceff1.js"></script>
@@ -94,6 +75,19 @@ function runOption(option){
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  /* FIX PENTRU TRAGERE STANGA/DREAPTA SI AUTO-ZOOM */
+  html, body {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    position: relative;
+    touch-action: pan-y;
+  }
+
+  input, textarea, select {
+    font-size: 16px !important; /* Previne auto-zoom pe iPhone când apeși pe input */
+    touch-action: manipulation;
+  }
 
   body {
     font-family: 'Outfit', sans-serif;
@@ -352,7 +346,6 @@ function runOption(option){
     border-radius: 12px;
     color: var(--text-primary);
     font-family: 'Outfit', sans-serif;
-    font-size: 13.5px;
     outline: none;
     transition: border-color 0.3s;
   }
@@ -1178,9 +1171,7 @@ function runOption(option){
   updateCountdown();
 
   // ===== SOCIAL PROOF NOTIFICATIONS =====
-  const toastData = [
-    
-  ];
+  const toastData = [];
 
   let toastIndex = 0;
   function showToast() {
